@@ -11,7 +11,7 @@ const product = {
 };
 
 export default function Cart() {
-  const { cart, removeFromCart, updateQuantity, getTotal } =
+  const { cart, removeFromCart, updateQuantity, subtotal } =
     useContext(CartContext);
 
   const formatPrice = (price) => {
@@ -28,7 +28,11 @@ export default function Cart() {
         <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-20 lg:items-center">
           <div className="col-span-2">
             {cart.length === 0 ? (
-              <p>Your cart is empty!</p>
+              <div className="flex justify-center items-center">
+                <p className="font-dm text-2xl text-gray-800">
+                  Your cart is empty! :({" "}
+                </p>
+              </div>
             ) : (
               <ul className="my-6 space-y-4">
                 {cart.map((item) => (
@@ -92,7 +96,7 @@ export default function Cart() {
               </Link>
             </div>
           </div>
-          <Sumary total={getTotal()} /> {/* Passando a quantidade total */}
+          <Sumary total={subtotal} /> {/* Passando a quantidade total */}
         </div>
       </section>
     </>

@@ -1,70 +1,79 @@
 export default function Formulario({ formData, setFormData }) {
   return (
-    <div>
-      <h3 className="font-dm text-lg">Contact & Shipping Information</h3>
+    <div className="lg:shadow-md lg:shadow-black/20 lg:p-6 lg:rounded-2xl lg:mb-6">
+      <h3 className="font-dm text-lg text-gray-800">
+        Contact & Shipping Information
+      </h3>
+      {/* Contact Information */}
       <div className="my-6">
-        <h4 className="font-dm pb-4">Contact Information</h4>
-        <form action="" className=" space-y-4">
-          <div className="grid grid-cols-1">
-            <label htmlFor="email">Email Address *</label>
-            <input
-              required
-              type="email"
-              name="email"
-              id="email"
-              value={formData.email}
-              onChange={(e) =>
-                setFormData({ ...formData, email: e.target.value })
-              }
-              className="border-1 border-gray-300 p-2 rounded-lg"
-            />
+        <h4 className="font-dm pb-4 text-gray-800">Contact Information</h4>
+        <div className="space-y-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-6">
+            <div className="grid grid-cols-1">
+              <label htmlFor="email">Email Address *</label>
+              <input
+                required
+                type="email"
+                name="email"
+                id="email"
+                value={formData.email}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
+                className="border-1 border-gray-300 p-2 rounded-lg"
+              />
+            </div>
+            <div className="grid grid-cols-1">
+              <label htmlFor="phone">Phone Number *</label>
+              <input
+                required
+                type="tel"
+                name="phone"
+                id="phone"
+                value={formData.phone}
+                onChange={(e) =>
+                  setFormData({ ...formData, phone: e.target.value })
+                }
+                className="border-1 border-gray-300 p-2 rounded-lg"
+              />
+            </div>
           </div>
-          <div className="grid grid-cols-1">
-            <label htmlFor="phone">Phone Number *</label>
-            <input
-              required
-              type="tel"
-              name="phone"
-              id="phone"
-              value={formData.phone}
-              onChange={(e) =>
-                setFormData({ ...formData, phone: e.target.value })
-              }
-              className="border-1 border-gray-300 p-2 rounded-lg"
-            />
-          </div>
-        </form>
+        </div>
       </div>
+
+      {/* Shipping Address */}
       <div className="my-6">
-        <h4 className="font-dm pb-4">Shipping Address</h4>
-        <form action="" className=" space-y-4">
-          <div className="grid grid-cols-1">
-            <label htmlFor="name">First Name *</label>
-            <input
-              required
-              type="text"
-              name="name"
-              id="name"
-              value={formData.name}
-              onChange={(e) =>
-                setFormData({ ...formData, name: e.target.value })
-              }
-              className="border-1 border-gray-300 p-2 rounded-lg"
-            />
-          </div>
-          <div className="grid grid-cols-1">
-            <label htmlFor="lastName">Last Number *</label>
-            <input
-              required
-              type="text"
-              name="lastName"
-              id="lastName"
-              value={formData.lastName}
-              onChange={(e) =>
-                setFormData({ ...formData, lastName: e.target.value })
-              }
-              className="border-1 border-gray-300 p-2 rounded-lg"
-            />
+        <h4 className="font-dm pb-4 text-gray-800">Shipping Address</h4>
+        <div className="space-y-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-6">
+            <div className="grid grid-cols-1">
+              <label htmlFor="name">First Name *</label>
+              <input
+                required
+                type="text"
+                name="name"
+                id="name"
+                value={formData.name}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
+                className="border-1 border-gray-300 p-2 rounded-lg"
+              />
+            </div>
+            <div className="grid grid-cols-1">
+              <label htmlFor="lastName">Last Name *</label>
+              <input
+                required
+                type="text"
+                name="lastName"
+                id="lastName"
+                value={formData.lastName}
+                onChange={(e) =>
+                  setFormData({ ...formData, lastName: e.target.value })
+                }
+                className="border-1 border-gray-300 p-2 rounded-lg"
+              />
+            </div>
           </div>
           <div className="grid grid-cols-1">
             <label htmlFor="street">Street Address *</label>
@@ -82,7 +91,7 @@ export default function Formulario({ formData, setFormData }) {
           </div>
           <div className="grid grid-cols-1">
             <label htmlFor="complement">
-              Apartament, Suite, etc. (optional)
+              Apartment, Suite, etc. (optional)
             </label>
             <input
               type="text"
@@ -95,35 +104,52 @@ export default function Formulario({ formData, setFormData }) {
               className="border-1 border-gray-300 p-2 rounded-lg"
             />
           </div>
-          <div className="grid grid-cols-1">
-            <label htmlFor="state">State/Province *</label>
-            <input
-              required
-              type="text"
-              name="state"
-              id="state"
-              value={formData.state}
-              onChange={(e) =>
-                setFormData({ ...formData, state: e.target.value })
-              }
-              className="border-1 border-gray-300 p-2 rounded-lg"
-            />
+          <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-6">
+            <div className="grid grid-cols-1">
+              <label htmlFor="city">City *</label>
+              <input
+                required
+                type="text"
+                name="city"
+                id="city"
+                value={formData.city}
+                onChange={(e) =>
+                  setFormData({ ...formData, state: e.target.value })
+                }
+                className="border-1 border-gray-300 p-2 rounded-lg"
+              />
+            </div>
+            <div className="grid grid-cols-1">
+              <label htmlFor="state">State/Province *</label>
+              <input
+                required
+                type="text"
+                name="state"
+                id="state"
+                value={formData.state}
+                onChange={(e) =>
+                  setFormData({ ...formData, state: e.target.value })
+                }
+                className="border-1 border-gray-300 p-2 rounded-lg"
+              />
+            </div>
+            <div className="grid grid-cols-1">
+              <label htmlFor="zip">ZIP/ Postal Code *</label>
+              <input
+                required
+                type="text"
+                name="zip"
+                id="zip"
+                value={formData.zip}
+                onChange={(e) =>
+                  setFormData({ ...formData, zip: e.target.value })
+                }
+                className="border-1 border-gray-300 p-2 rounded-lg"
+              />
+            </div>
           </div>
           <div className="grid grid-cols-1">
-            <label htmlFor="zip">ZIP/ Postal Code *</label>
-            <input
-              required
-              type="text"
-              name="zip"
-              id="zip"
-              value={formData.zip}
-              onChange={(e) =>
-                setFormData({ ...formData, zip: e.target.value })
-              }
-              className="border-1 border-gray-300 p-2 rounded-lg"
-            />
-          </div>
-          <div className="grid grid-cols-1">
+            <label htmlFor="country">Country *</label>
             <select
               id="country"
               name="country"
@@ -145,7 +171,7 @@ export default function Formulario({ formData, setFormData }) {
               <option value="Japan">Japan</option>
             </select>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );

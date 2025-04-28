@@ -1,71 +1,106 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useMemo } from "react";
 
-// Cria o contexto
 export const CartContext = createContext();
 
-// Cria o Provider
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState(() => {
     const savedCart = localStorage.getItem("cart");
     return savedCart ? JSON.parse(savedCart) : [];
   });
 
-  // Atualiza o localStorage sempre que o carrinho mudar
+  const [shippingMethod, setShippingMethod] = useState("free");
+
+  // Métodos de envio disponíveis
+  const shippingMethods = {
+    standard: 15, // Frete padrão
+    express: 25, // Frete expresso
+    free: 0, // Frete grátis
+  };
+
+  // Calcula o subtotal do carrinho (garante que price seja número)
+  const subtotal = useMemo(
+    () =>
+      cart.reduce(
+        (total, item) => total + (Number(item.price) || 0) * item.quantity,
+        0
+      ),
+    [cart]
+  );
+
+  // Frete grátis se subtotal >= 150, senão usa o método selecionado (com fallback para 0)
+  const shipping = useMemo(
+    () => (subtotal >= 150 ? 0 : shippingMethods[shippingMethod] || 0),
+    [subtotal, shippingMethod]
+  );
+
+  // Atualiza o localStorage quando o carrinho muda
   useEffect(() => {
     if (cart.length > 0) {
       localStorage.setItem("cart", JSON.stringify(cart));
+    } else {
+      localStorage.removeItem("cart");
     }
   }, [cart]);
 
-  // Função para adicionar um produto ao carrinho
-  function addToCart(product, quantity = 1, color = "") {
+  // Adiciona item ao carrinho (com cor e quantidade)
+  const addToCart = (product, quantity = 1, color = "") => {
     const productExists = cart.find(
       (item) => item.id === product.id && item.color === color
-    ); // Verifica se o produto e a cor já estão no carrinho
-
+    );
     if (productExists) {
-      // Se o produto e cor já existirem no carrinho, incrementa a quantidade
-      const updateCart = cart.map((item) => {
-        if (item.id === product.id && item.color === color) {
-          return { ...item, quantity: item.quantity + quantity };
-        }
-        return item;
-      });
-      setCart(updateCart);
+      setCart(
+        cart.map((item) =>
+          item.id === product.id && item.color === color
+            ? { ...item, quantity: item.quantity + quantity }
+            : item
+        )
+      );
     } else {
-      // Se o produto ou a cor não existirem no carrinho, adiciona com a quantidade e a cor fornecida
       setCart([...cart, { ...product, quantity, color }]);
     }
-  }
+  };
 
-  // Função para remover um produto do carrinho
-  function removeFromCart(id, color) {
-    const updateCart = cart.filter(
-      (item) => item.id !== id || item.color !== color
-    );
-    setCart(updateCart);
-  }
+  // Remove item do carrinho
+  const removeFromCart = (id, color) => {
+    setCart(cart.filter((item) => item.id !== id || item.color !== color));
+  };
 
-  // Função para atualizar a quantidade do item no carrinho
-  function updateQuantity(id, color, newQuantity) {
+  // Atualiza quantidade de um item
+  const updateQuantity = (id, color, newQuantity) => {
     if (newQuantity > 0) {
-      const updatedCart = cart.map((item) =>
-        item.id === id && item.color === color
-          ? { ...item, quantity: newQuantity }
-          : item
+      setCart(
+        cart.map((item) =>
+          item.id === id && item.color === color
+            ? { ...item, quantity: newQuantity }
+            : item
+        )
       );
-      setCart(updatedCart);
     }
-  }
+  };
 
-  // Função para calcular o valor total do carrinho
-  function getTotal() {
-    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
-  }
+  // Limpa o carrinho
+  const clearCart = () => {
+    setCart([]);
+    localStorage.removeItem("cart");
+  };
+
+  // Calcula o total (subtotal + frete)
+  const getTotal = () => subtotal + shipping;
 
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, removeFromCart, updateQuantity, getTotal }}
+      value={{
+        cart,
+        addToCart,
+        removeFromCart,
+        updateQuantity,
+        subtotal,
+        shippingMethod,
+        setShippingMethod,
+        shipping,
+        getTotal,
+        clearCart,
+      }}
     >
       {children}
     </CartContext.Provider>
