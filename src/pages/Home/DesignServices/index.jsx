@@ -12,7 +12,10 @@ export default function DesignServices() {
           Our experts will work with you to create a space that reflects your
           personal style.
         </p>
-        <Link className="bg-rose text-white font-medium text-lg py-3 px-6 rounded-xl hover:bg-coral transition-all duration-300">
+        <Link
+          to="/contact"
+          className="bg-rose text-white font-medium text-lg py-3 px-6 rounded-xl hover:bg-coral transition-all duration-300"
+        >
           Book a consultation
         </Link>
       </div>
