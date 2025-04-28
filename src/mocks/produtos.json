@@ -1,0 +1,206 @@
+[
+  {
+    "id": "chair-001",
+    "title": "Nordic Embrace Lounge Chair",
+    "srcPrincipal": "/images/chair001.jpeg",
+    "srcVariacoes": [{ "id": 1, "src": "/images/chair-001.jpeg" }],
+    "alt": "Elegant mid-century modern armchair with cream upholstery and sculpted wooden frame",
+    "new": false,
+    "subcategory": "Chairs",
+    "category": "Furniture",
+    "rating": 4,
+    "reviews": 127,
+    "price": 890,
+    "colors": [
+      { "name": "Light Beige", "hex": "#F5F5DC" },
+      { "name": "Warm Walnut", "hex": "#6C4F37" }
+    ],
+    "description": "Add a touch of Scandinavian charm to your living room with this elegant lounge chair. Featuring soft cream upholstery and a sculpted wooden frame, it offers both comfort and stylish sophistication.",
+    "productDetails": [
+      "Dimensions: 32\"W x 34\"D x 36\"H",
+      "Frame: Solid walnut wood",
+      "Upholstery: Premium linen blend",
+      "Cushion Fill: High-resilience foam",
+      "Assembly Required: No"
+    ]
+  },
+  {
+    "id": "chair-002",
+    "title": "Urban Oasis Lounge Chair",
+    "srcPrincipal": "/images/chair002.jpeg",
+    "srcVariacoes": [{ "id": 1, "src": "/images/chair-002.jpeg" }],
+    "alt": "Contemporary lounge chair with plush beige cushioning on sleek metal and wooden frame",
+    "new": true,
+    "subcategory": "Chairs",
+    "category": "Furniture",
+    "rating": 5,
+    "reviews": 152,
+    "price": 1020,
+    "colors": [
+      { "name": "Beige", "hex": "#F5F5DC" },
+      { "name": "Metallic Silver", "hex": "#C0C0C0" }
+    ],
+    "description": "Bring modern elegance to any space with this contemporary lounge chair. Its plush beige cushioning and sleek combination of metal and wood make it a versatile addition to your home.",
+    "productDetails": [
+      "Dimensions: 30\"W x 35\"D x 38\"H",
+      "Frame: Stainless steel and oak wood",
+      "Upholstery: Microfiber fabric",
+      "Cushion Fill: High-density foam",
+      "Assembly Required: Partial"
+    ]
+  },
+  {
+    "id": "table-001",
+    "title": "Horizon Dual Coffee Tables",
+    "srcPrincipal": "/images/table001.jpeg",
+    "srcVariacoes": [{ "id": 1, "src": "/images/table-001.jpeg" }],
+    "alt": "Set of two circular walnut coffee tables with pedestal bases beside a gray sectional sofa",
+    "new": false,
+    "subcategory": "Tables",
+    "category": "Furniture",
+    "rating": 4,
+    "reviews": 98,
+    "price": 740,
+    "colors": [{ "name": "Walnut", "hex": "#4A2C2A" }],
+    "description": "A timeless design, the Horizon Dual Coffee Tables offer versatility and style. Made from rich walnut wood, they feature pedestal bases that complement both traditional and modern interiors.",
+    "productDetails": [
+      "Dimensions (Large): 36\"Dia x 16\"H",
+      "Dimensions (Small): 28\"Dia x 14\"H",
+      "Material: Solid walnut wood",
+      "Finish: Hand-applied oil finish",
+      "Assembly Required: No"
+    ]
+  },
+  {
+    "id": "light-001",
+    "title": "Crystal Orbit Chandelier",
+    "srcPrincipal": "/images/light001.jpg",
+    "srcVariacoes": [
+      { "id": 1, "src": "/images/light-001.jpeg" },
+      { "id": 2, "src": "/images/light--001.jpg" }
+    ],
+    "alt": "Luxury circular crystal chandelier with gold mounting and suspended design",
+    "new": true,
+    "subcategory": "Luminaires",
+    "category": "Lighting",
+    "rating": 5,
+    "reviews": 184,
+    "price": 1300,
+    "colors": [
+      { "name": "Warm Gold", "hex": "#FFD700" },
+      { "name": "Clear Crystal", "hex": "#FFFFFF" }
+    ],
+    "description": "Illuminate your home with the luxurious Crystal Orbit Chandelier. Featuring circular crystal accents and a gold mounting, it adds a touch of opulence to any space, perfect for creating a statement.",
+    "productDetails": [
+      "Dimensions: 28\"Dia x 12\"H",
+      "Material: Crystal and brass",
+      "Lighting: LED compatible",
+      "Installation: Professional installation recommended",
+      "Adjustable Height: Yes"
+    ]
+  },
+  {
+    "id": "light-002",
+    "title": "Celestial Disc Pendant Light",
+    "srcPrincipal": "/images/light002.jpeg",
+    "srcVariacoes": [{ "id": 1, "src": "/images/light-002.webp" }],
+    "alt": "Modern illuminated disc pendant light with textured surface and gold hardware",
+    "new": false,
+    "subcategory": "Luminaires",
+    "category": "Lighting",
+    "rating": 4,
+    "reviews": 112,
+    "price": 890,
+    "colors": [
+      { "name": "Cool Silver", "hex": "#C0C0C0" },
+      { "name": "Golden Touch", "hex": "#FFD700" }
+    ],
+    "description": "A contemporary piece that blends form and function, the Celestial Disc Pendant Light offers a sleek, modern design with a textured surface and gold hardware for a sophisticated touch of light.",
+    "productDetails": [
+      "Dimensions: 20\"Dia x 2\"H",
+      "Material: Textured aluminum and brass",
+      "Lighting: Integrated LED",
+      "Dimmable: Yes",
+      "Installation: Hardwired"
+    ]
+  },
+  {
+    "id": "sofa-001",
+    "title": "Versailles Damask Sofa",
+    "srcPrincipal": "/images/sofa001.jpg",
+    "srcVariacoes": [{ "id": 1, "src": "/images/sofa001.jpg" }],
+    "alt": "French provincial sofa with ornate carved frame in white finish and grey damask upholstery",
+    "new": false,
+    "subcategory": "Sofas",
+    "category": "Furniture",
+    "rating": 4,
+    "reviews": 140,
+    "price": 1450,
+    "colors": [
+      { "name": "Soft Grey", "hex": "#D3D3D3" },
+      { "name": "White Wood", "hex": "#F4F4F4" }
+    ],
+    "description": "Exude French provincial elegance with the Versailles Damask Sofa. Its ornate carved frame, white finish, and luxurious grey damask upholstery create a stunning piece for any living room.",
+    "productDetails": [
+      "Dimensions: 84\"W x 36\"D x 32\"H",
+      "Frame: Carved solid hardwood",
+      "Upholstery: Damask polyester blend",
+      "Cushion Fill: Feather blend",
+      "Assembly Required: No"
+    ]
+  },
+  {
+    "id": "sofa-002",
+    "title": "Heritage Chesterfield Sofa",
+    "srcPrincipal": "/images/sofa002.jpg",
+    "srcVariacoes": [
+      { "id": 1, "src": "/images/sofa-002.jpg" },
+      { "id": 2, "src": "/images/sofa--002.jpg" }
+    ],
+    "alt": "Classic brown leather Chesterfield sofa with deep button tufting in a study with vintage typewriter",
+    "new": true,
+    "subcategory": "Sofas",
+    "category": "Furniture",
+    "rating": 5,
+    "reviews": 205,
+    "price": 1390,
+    "colors": [
+      { "name": "Rich Brown", "hex": "#8B4513" },
+      { "name": "Antique Brass", "hex": "#CD7F32" }
+    ],
+    "description": "Add timeless sophistication with the Heritage Chesterfield Sofa. Its deep button tufting, rich brown leather, and vintage charm make it a classic focal point for any living room.",
+    "productDetails": [
+      "Dimensions: 90\"W x 38\"D x 32\"H",
+      "Frame: Kiln-dried hardwood",
+      "Upholstery: Top-grain leather",
+      "Cushion Fill: Foam and fiber",
+      "Assembly Required: No"
+    ]
+  },
+  {
+    "id": "set-001",
+    "title": "Baroque Living Room Set",
+    "srcPrincipal": "/images/set001.jpg",
+    "srcVariacoes": [{ "id": 1, "src": "/images/set001.jpg" }],
+    "alt": "Ornate baroque style armchair and sofa set in cream with gold-trimmed wooden frames",
+    "new": false,
+    "subcategory": "Sofas",
+    "category": "Furniture",
+    "rating": 4,
+    "reviews": 118,
+    "price": 1480,
+    "colors": [
+      { "name": "Ivory", "hex": "#FFFFF0" },
+      { "name": "Gold Trim", "hex": "#FFD700" }
+    ],
+    "description": "Elevate your space with the Baroque Living Room Set, featuring luxurious armchairs and a sofa with ornate cream upholstery and gold-trimmed wooden frames, creating a regal atmosphere.",
+    "productDetails": [
+      "Dimensions (Sofa): 86\"W x 36\"D x 34\"H",
+      "Dimensions (Armchair): 32\"W x 34\"D x 36\"H",
+      "Frame: Solid wood with gold leaf finish",
+      "Upholstery: Velvet blend fabric",
+      "Cushion Fill: High-density foam",
+      "Assembly Required: No"
+    ]
+  }
+]

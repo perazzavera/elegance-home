@@ -1,0 +1,43 @@
+@import "tailwindcss";
+@import "../node_modules/preline/variants.css";
+
+@theme {
+  --color-azul: oklch(0.28 0.033 198.64);
+  --color-rose: oklch(0.81 0.1005 42.77);
+  --color-cinza-claro: oklch(0.86 0 0);
+  --color-dourado: oklch(0.89 0.182186 95.3305);
+  --color-esmeralda: oklch(0.67 0.1624 144.21);
+  --color-chumbo: oklch(0.29 0 0);
+  --color-coral: oklch(0.72 0.1785 27.97);
+  --color-pessego: oklch(0.88 0.0759 71.1);
+  --font-playfair: "Playfair Display", serif;
+  --font-montserrat: "Montserrat", sans-serif;
+  --font-dm: "DM Serif Display", serif;
+  --font-kenao: "KENAO";
+
+  --animate-fade-up: fade-up 0.5s ease-out;
+
+  @keyframes fade-up {
+    0% {
+      opacity: 0;
+      transform: translateY(100px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@font-face {
+  font-family: "KENAO";
+  src: url("/fonts/KENAO.woff2") format("woff2"),
+    url("/fonts/KENAO.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+h1 {
+  font-family: "KENAO";
+}
