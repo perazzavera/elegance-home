@@ -56,7 +56,10 @@ export default function HeroSection() {
                         <p className="  font-montserrat text-lg lg:text-2xl lg:mb-4">
                           {slide.texto}
                         </p>
-                        <Link className="text-xs font-montserrat bg-rose py-2 px-4 rounded-lg w-fit hover:bg-coral transition-all duration-300 lg:text-lg lg:py-3 lg:px-6">
+                        <Link
+                          to="explore"
+                          className="text-xs font-montserrat bg-rose py-2 px-4 rounded-lg w-fit hover:bg-coral transition-all duration-300 lg:text-lg lg:py-3 lg:px-6"
+                        >
                           Explore Now
                         </Link>
                       </div>

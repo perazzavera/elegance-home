@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect, useMemo } from "react";
+import { createContext, useState, useEffect } from "react";
 
 export const CartContext = createContext();
 
@@ -7,31 +7,6 @@ export const CartProvider = ({ children }) => {
     const savedCart = localStorage.getItem("cart");
     return savedCart ? JSON.parse(savedCart) : [];
   });
-
-  const [shippingMethod, setShippingMethod] = useState("free");
-
-  // Métodos de envio disponíveis
-  const shippingMethods = {
-    standard: 15, // Frete padrão
-    express: 25, // Frete expresso
-    free: 0, // Frete grátis
-  };
-
-  // Calcula o subtotal do carrinho (garante que price seja número)
-  const subtotal = useMemo(
-    () =>
-      cart.reduce(
-        (total, item) => total + (Number(item.price) || 0) * item.quantity,
-        0
-      ),
-    [cart]
-  );
-
-  // Frete grátis se subtotal >= 150, senão usa o método selecionado (com fallback para 0)
-  const shipping = useMemo(
-    () => (subtotal >= 150 ? 0 : shippingMethods[shippingMethod] || 0),
-    [subtotal, shippingMethod]
-  );
 
   // Atualiza o localStorage quando o carrinho muda
   useEffect(() => {
@@ -65,6 +40,20 @@ export const CartProvider = ({ children }) => {
     setCart(cart.filter((item) => item.id !== id || item.color !== color));
   };
 
+  // Limpa o carrinho
+  const clearCart = () => {
+    setCart([]);
+    localStorage.removeItem("cart");
+  };
+
+  // Calcula o subtotal do carrinho (garante que price seja número)
+  const getCartTotal = () => {
+    return cart.reduce(
+      (total, item) => total + (Number(item.price) || 0) * item.quantity,
+      0
+    );
+  };
+
   // Atualiza quantidade de um item
   const updateQuantity = (id, color, newQuantity) => {
     if (newQuantity > 0) {
@@ -78,15 +67,6 @@ export const CartProvider = ({ children }) => {
     }
   };
 
-  // Limpa o carrinho
-  const clearCart = () => {
-    setCart([]);
-    localStorage.removeItem("cart");
-  };
-
-  // Calcula o total (subtotal + frete)
-  const getTotal = () => subtotal + shipping;
-
   return (
     <CartContext.Provider
       value={{
@@ -94,11 +74,7 @@ export const CartProvider = ({ children }) => {
         addToCart,
         removeFromCart,
         updateQuantity,
-        subtotal,
-        shippingMethod,
-        setShippingMethod,
-        shipping,
-        getTotal,
+        getCartTotal,
         clearCart,
       }}
     >

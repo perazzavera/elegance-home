@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Disclosure,
   DisclosureButton,
@@ -6,14 +7,55 @@ import {
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 
-export default function DesktopFilter({ subCategories, filters }) {
+export default function DesktopFilter({
+  subCategories,
+  filters,
+  onFilterChange,
+}) {
+  const [selectedFilters, setSelectedFilters] = useState({
+    categories: [],
+    options: {},
+  });
+
+  // Atualiza os filtros selecionados
+  const handleFilterChange = (sectionId, optionValue) => {
+    const newFilters = { ...selectedFilters };
+
+    if (sectionId === "categories") {
+      // Adiciona ou remove a categoria selecionada
+      if (newFilters.categories.includes(optionValue)) {
+        newFilters.categories = newFilters.categories.filter(
+          (item) => item !== optionValue
+        );
+      } else {
+        newFilters.categories.push(optionValue);
+      }
+    } else {
+      // Adiciona ou remove a opção de filtro
+      if (!newFilters.options[sectionId]) {
+        newFilters.options[sectionId] = [];
+      }
+
+      if (newFilters.options[sectionId].includes(optionValue)) {
+        newFilters.options[sectionId] = newFilters.options[sectionId].filter(
+          (item) => item !== optionValue
+        );
+      } else {
+        newFilters.options[sectionId].push(optionValue);
+      }
+    }
+
+    setSelectedFilters(newFilters);
+    onFilterChange(newFilters); // Passa os filtros para o componente pai (ou para a listagem de produtos)
+  };
+
   return (
     <main className="w-60 hidden lg:block">
       <section
         aria-labelledby="products-heading"
         className="pt-6 pb-24 hidden lg:block"
       >
-        <div className="">
+        <div>
           {/* Filters */}
           <form className="hidden lg:block">
             <h3 className="sr-only">Categories</h3>
@@ -23,7 +65,19 @@ export default function DesktopFilter({ subCategories, filters }) {
             >
               {subCategories.map((category) => (
                 <li key={category.name}>
-                  <Link to={category.to}>{category.name}</Link>
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={selectedFilters.categories.includes(
+                        category.name
+                      )}
+                      onChange={() =>
+                        handleFilterChange("categories", category.name)
+                      }
+                      className="h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                    />
+                    <Link to={category.to}>{category.name}</Link>
+                  </label>
                 </li>
               ))}
             </ul>
@@ -53,42 +107,23 @@ export default function DesktopFilter({ subCategories, filters }) {
                 </h3>
                 <DisclosurePanel className="pt-6">
                   <div className="space-y-4">
-                    {section.options.map((option, optionIdx) => (
+                    {section.options.map((option) => (
                       <div key={option.value} className="flex gap-3">
                         <div className="flex h-5 shrink-0 items-center">
-                          <div className="group grid size-4 grid-cols-1">
-                            <input
-                              defaultValue={option.value}
-                              defaultChecked={option.checked}
-                              id={`filter-${section.id}-${optionIdx}`}
-                              name={`${section.id}[]`}
-                              type="checkbox"
-                              className="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
-                            />
-                            <svg
-                              fill="none"
-                              viewBox="0 0 14 14"
-                              className="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25"
-                            >
-                              <path
-                                d="M3 8L6 11L11 3.5"
-                                strokeWidth={2}
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="opacity-0 group-has-checked:opacity-100"
-                              />
-                              <path
-                                d="M3 7H11"
-                                strokeWidth={2}
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="opacity-0 group-has-indeterminate:opacity-100"
-                              />
-                            </svg>
-                          </div>
+                          <input
+                            type="checkbox"
+                            id={`filter-${section.id}-${option.value}`}
+                            checked={selectedFilters.options[
+                              section.id
+                            ]?.includes(option.value)}
+                            onChange={() =>
+                              handleFilterChange(section.id, option.value)
+                            }
+                            className="h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                          />
                         </div>
                         <label
-                          htmlFor={`filter-${section.id}-${optionIdx}`}
+                          htmlFor={`filter-${section.id}-${option.value}`}
                           className="text-sm text-gray-600"
                         >
                           {option.label}

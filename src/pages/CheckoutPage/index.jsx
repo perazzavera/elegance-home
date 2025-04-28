@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Information } from "./Step1";
 import { Shipping } from "./Step2";
 import { CheckoutStep3 } from "./Step3";
+import { CartContext } from "../../context/CartContext";
 
 const Checkout = () => {
   const [step, setStep] = useState(1); // Etapa do checkout
@@ -16,9 +17,26 @@ const Checkout = () => {
     state: "",
     zip: "",
     country: "United States",
-    shippingMethod: "",
+    shippingMethod: "standart",
     orderNotes: "",
   });
+
+  const shippingMethods = [
+    { id: "standard", name: "Standard Shipping", price: 15, days: "3-5" },
+    { id: "express", name: "Express Shipping", price: 25, days: "1-2" },
+    { id: "free", name: "Free Shipping", price: 0, days: "5-7", minOrder: 150 },
+  ];
+
+  const { getCartTotal } = useContext(CartContext);
+
+  const subtotal = getCartTotal();
+  const shipping =
+    formData.shippingMethod === "free" && subtotal >= 150
+      ? 0
+      : shippingMethods.find((m) => m.id === formData.shippingMethod)?.price ||
+        0;
+  const tax = subtotal * 0.07; // 7% tax
+  const total = subtotal + shipping + tax;
 
   // Função para avançar para a próxima etapa
   const nextStep = () => {
@@ -44,6 +62,10 @@ const Checkout = () => {
           nextStep={nextStep}
           formData={formData}
           setFormData={setFormData}
+          total={total}
+          subtotal={subtotal}
+          tax={tax}
+          shipping={shipping}
         />
       )}
 
@@ -54,10 +76,24 @@ const Checkout = () => {
           currentStep={step}
           formData={formData}
           setFormData={setFormData}
+          total={total}
+          subtotal={subtotal}
+          tax={tax}
+          shipping={shipping}
+          shippingMethods={shippingMethods}
         />
       )}
 
-      {step === 3 && <CheckoutStep3 prevStep={prevStep} currentStep={step} />}
+      {step === 3 && (
+        <CheckoutStep3
+          prevStep={prevStep}
+          currentStep={step}
+          total={total}
+          subtotal={subtotal}
+          tax={tax}
+          shipping={shipping}
+        />
+      )}
     </div>
   );
 };

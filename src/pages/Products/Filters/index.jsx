@@ -1,11 +1,12 @@
 import MobileFilter from "./MobileFilter";
 import DesktopFilter from "./DesktopFilter";
+import { useState } from "react";
 
 const subCategories = [
   { name: "Chairs", to: `/products/furniture/chairs` },
   { name: "Tables", to: `/products/furniture/tables` },
   { name: "Sofas", to: `/products/furniture/sofas` },
-  { name: "Chandeliers", to: `/products/lighting/chandeliers` },
+  { name: "Luminaires", to: `/products/lighting/luminaires` },
 ];
 const filters = [
   {
@@ -33,6 +34,39 @@ const filters = [
 ];
 
 export default function Example({ mobileFiltersOpen, setMobileFiltersOpen }) {
+  const [selectedFilters, setSelectedFilters] = useState({
+    categories: [],
+    options: {},
+  });
+
+  const handleFilterChange = (sectionId, optionValue) => {
+    const newFilters = { ...selectedFilters };
+
+    if (sectionId === "categories") {
+      if (newFilters.categories.includes(optionValue)) {
+        newFilters.categories = newFilters.categories.filter(
+          (item) => item !== optionValue
+        );
+      } else {
+        newFilters.categories.push(optionValue);
+      }
+    } else {
+      if (!newFilters.options[sectionId]) {
+        newFilters.options[sectionId] = [];
+      }
+
+      if (newFilters.options[sectionId].includes(optionValue)) {
+        newFilters.options[sectionId] = newFilters.options[sectionId].filter(
+          (item) => item !== optionValue
+        );
+      } else {
+        newFilters.options[sectionId].push(optionValue);
+      }
+    }
+
+    setSelectedFilters(newFilters);
+  };
+
   return (
     <div className="bg-white">
       <div>
@@ -42,10 +76,15 @@ export default function Example({ mobileFiltersOpen, setMobileFiltersOpen }) {
           setMobileFiltersOpen={setMobileFiltersOpen}
           subCategories={subCategories}
           filters={filters}
+          onFilterChange={handleFilterChange}
         />
 
         {/* Desktop filter  */}
-        <DesktopFilter subCategories={subCategories} filters={filters} />
+        <DesktopFilter
+          subCategories={subCategories}
+          filters={filters}
+          onFilterChange={handleFilterChange}
+        />
       </div>
     </div>
   );

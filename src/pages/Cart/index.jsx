@@ -11,13 +11,15 @@ const product = {
 };
 
 export default function Cart() {
-  const { cart, removeFromCart, updateQuantity, subtotal } =
-    useContext(CartContext);
+  const { cart, removeFromCart, updateQuantity } = useContext(CartContext);
 
   const formatPrice = (price) => {
-    return `$${Math.round(price)}`;
+    const numericPrice = parseFloat(price);
+    if (isNaN(numericPrice)) {
+      return "$0.00"; // Retorna um valor padrão caso o preço não seja válido
+    }
+    return `$${numericPrice.toFixed(2)}`;
   };
-
   return (
     <>
       <section className="px-4 lg:px-20">
@@ -51,7 +53,11 @@ export default function Cart() {
                           <button
                             className="cursor-pointer"
                             onClick={() =>
-                              updateQuantity(item.id, item.quantity - 1)
+                              updateQuantity(
+                                item.id,
+                                item.color,
+                                item.quantity - 1
+                              )
                             }
                             disabled={item.quantity <= 1}
                           >
@@ -62,7 +68,11 @@ export default function Cart() {
                           <button
                             className="cursor-pointer"
                             onClick={() =>
-                              updateQuantity(item.id, item.quantity + 1)
+                              updateQuantity(
+                                item.id,
+                                item.color,
+                                item.quantity + 1
+                              )
                             }
                           >
                             <LuPlus />
@@ -96,7 +106,7 @@ export default function Cart() {
               </Link>
             </div>
           </div>
-          <Sumary total={subtotal} /> {/* Passando a quantidade total */}
+          <Sumary /> {/* Passando a quantidade total */}
         </div>
       </section>
     </>

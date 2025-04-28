@@ -1,16 +1,35 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { LuArrowRight } from "react-icons/lu";
 import { Link } from "react-router-dom";
 import { CartContext } from "../../../context/CartContext";
 
-export default function Summary() {
-  const { subtotal, shipping, getTotal } = useContext(CartContext);
+const shippingMethods = [
+  { id: "standard", name: "Standard Shipping", price: 15, days: "3-5" },
+  { id: "express", name: "Express Shipping", price: 25, days: "1-2" },
+  { id: "free", name: "Free Shipping", price: 0, days: "5-7", minOrder: 150 },
+];
 
-  const tax = subtotal * 0.1; // 10% de imposto
-  const finalTotal = getTotal() + tax; // Total incluindo frete e imposto
+export default function Summary() {
+  const { getCartTotal } = useContext(CartContext);
+  const [formData, setFormData] = useState({ shippingMethod: "standart" });
+
+  const subtotal = getCartTotal();
+  const shipping =
+    formData.shippingMethod === "free" && subtotal >= 150
+      ? 0
+      : shippingMethods.find((m) => m.id === formData.shippingMethod)?.price ||
+        0;
+  const tax = subtotal * 0.07; // 7% tax
+  const total = subtotal + shipping + tax;
 
   // Formata preço com 2 casas decimais (ex: $50.00)
-  const formatPrice = (price) => `$${price.toFixed(2)}`;
+  const formatPrice = (price) => {
+    const numericPrice = parseFloat(price);
+    if (isNaN(numericPrice)) {
+      return "$0.00"; // Retorna um valor padrão caso o preço não seja válido
+    }
+    return `$${numericPrice.toFixed(2)}`;
+  };
 
   return (
     <div className="py-4 border-t-1 border-gray-400 lg:border-0">
@@ -34,7 +53,7 @@ export default function Summary() {
 
       <div className="flex justify-between mt-4 text-lg border-t-1 border-gray-400 pt-4">
         <p className="font-dm text-gray-800">Total</p>
-        <p className="text-coral font-semibold">{formatPrice(finalTotal)}</p>
+        <p className="text-coral font-semibold">{formatPrice(total)}</p>
       </div>
 
       <div className="my-4 pb-4 border-b-1 border-gray-400">

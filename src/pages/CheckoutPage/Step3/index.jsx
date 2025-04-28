@@ -5,7 +5,14 @@ import Breadcrumb from "../../../components/Breadcrumbs";
 import OrderResume from "../OrderResume";
 import { CartContext } from "../../../context/CartContext";
 
-export const CheckoutStep3 = ({ prevStep, currentStep }) => {
+export const CheckoutStep3 = ({
+  prevStep,
+  currentStep,
+  total,
+  subtotal,
+  tax,
+  shipping,
+}) => {
   const [orderPlaced, setOrderPlaced] = useState(false);
   const { clearCart } = useContext(CartContext);
 
@@ -125,7 +132,12 @@ export const CheckoutStep3 = ({ prevStep, currentStep }) => {
               </div>
             </div>
 
-            <OrderResume />
+            <OrderResume
+              total={total}
+              subtotal={subtotal}
+              tax={tax}
+              shipping={shipping}
+            />
           </div>
         </>
       ) : (
@@ -144,7 +156,9 @@ export const CheckoutStep3 = ({ prevStep, currentStep }) => {
           </div>
           <div className="flex items-center justify-center my-4 gap-2">
             <p className="font-bold">Order Reference:</p>
-            <p className="text-coral font-bold">EH-478036</p>
+            <p className="text-coral font-bold">
+              EH-{Math.floor(100000 + Math.random() * 900000)}
+            </p>
           </div>
           <div className="my-10">
             <Link

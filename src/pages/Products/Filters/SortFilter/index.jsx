@@ -1,7 +1,7 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 
-export default function SortFilter({ sortOptions }) {
+export default function SortFilter({ sortOptions, handleSortChange }) {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
@@ -20,7 +20,10 @@ export default function SortFilter({ sortOptions }) {
       >
         <div className="p-2 grid grid-cols-1 gap-2">
           {sortOptions.map((option) => (
-            <MenuItem key={option.name}>
+            <MenuItem
+              key={option.name}
+              onClick={() => handleSortChange(option.name)}
+            >
               <a>{option.name}</a>
             </MenuItem>
           ))}

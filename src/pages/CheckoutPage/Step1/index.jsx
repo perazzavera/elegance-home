@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Breadcrumb from "../../../components/Breadcrumbs";
 import { Link } from "react-router-dom";
-import { LuArrowLeft, LuShield } from "react-icons/lu";
+import { LuArrowLeft } from "react-icons/lu";
 import Formulario from "./Formulario";
 import OrderResume from "../OrderResume";
 
@@ -10,6 +10,10 @@ export const Information = ({
   currentStep,
   formData,
   setFormData,
+  total,
+  subtotal,
+  tax,
+  shipping,
 }) => {
   const breadcrumbs = [
     {
@@ -61,7 +65,12 @@ export const Information = ({
               </button>
             </div>
           </div>
-          <OrderResume />
+          <OrderResume
+            tax={tax}
+            subtotal={subtotal}
+            total={total}
+            shipping={shipping}
+          />
         </div>
       </div>
     </>

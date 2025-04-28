@@ -1,10 +1,7 @@
-import { LuArrowLeft, LuShield } from "react-icons/lu";
+import { LuArrowLeft } from "react-icons/lu";
 import Breadcrumb from "../../../components/Breadcrumbs";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import OrderResume from "../OrderResume";
-import { CartContext } from "../../../context/CartContext";
-
-const formatPrice = (price) => `$${Math.round(price)}`;
 
 export const Shipping = ({
   prevStep,
@@ -12,45 +9,21 @@ export const Shipping = ({
   currentStep,
   formData,
   setFormData,
+  total,
+  subtotal,
+  tax,
+  shipping,
+  shippingMethods,
 }) => {
-  const { setShippingMethod, subtotal } = useContext(CartContext);
+  const handleInputChange = (e) => {
+    const { name, value, type } = e.target;
 
-  // Métodos de envio disponíveis (frete grátis só aparece se subtotal >= 150)
-  const shippingMethods = [
-    {
-      id: "standard",
-      name: "Standard Shipping",
-      price: 15,
-      days: "3-5",
-    },
-    {
-      id: "express",
-      name: "Express Shipping",
-      price: 25,
-      days: "1-2",
-    },
-    ...(subtotal >= 150
-      ? [
-          {
-            id: "free",
-            name: "Free Shipping",
-            price: 0,
-            days: "5-7",
-            info: "Free shipping applied!",
-          },
-        ]
-      : []),
-  ];
-
-  // Atualiza o frete no formData E no contexto
-  const handleShippingChange = (selectedMethodId) => {
-    // Atualiza tanto o formData quanto o contexto
     setFormData({
       ...formData,
-      shippingMethod: selectedMethodId,
+      [name]: type === "checkbox" ? e.target.checked : value,
     });
-    setShippingMethod(selectedMethodId); // Isso vai disparar a atualização no OrderResume
   };
+
   // Breadcrumbs para navegação
   const breadcrumbs = [
     {
@@ -85,34 +58,58 @@ export const Shipping = ({
       <h3 className="font-dm text-gray-800 text-lg mb-4">Shipping Method</h3>
       <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-20 lg:mb-16">
         <div>
-          <div className="grid grid-cols-1 gap-4">
-            {shippingMethods.map((item) => (
-              <label
-                key={item.id}
-                className={`flex items-center gap-4 py-4 px-8 border-2 rounded-xl cursor-pointer ${
-                  formData.shippingMethod === item.id
-                    ? "border-coral bg-rose/10"
+          <div className="space-y-4">
+            {shippingMethods.map((method) => (
+              <div
+                key={method.id}
+                className={`border rounded-lg p-4 cursor-pointer transition-all ${
+                  formData.shippingMethod === method.id
+                    ? "border-1 border-coral bg-rose/10"
                     : "border-gray-300"
                 }`}
-                htmlFor={item.id}
+                onClick={() =>
+                  setFormData({ ...formData, shippingMethod: method.id })
+                }
               >
-                <input
-                  type="radio"
-                  name="shippingMethod"
-                  id={item.id}
-                  value={item.id}
-                  checked={formData.shippingMethod === item.id}
-                  onChange={() => handleShippingChange(item.id)}
-                />
-                <div>
-                  <h4 className="font-semibold text-gray-800">{item.name}</h4>
-                  <p className="text-sm text-gray-500">
-                    Estimated delivery: {item.days} days
-                  </p>
-                  <p className="text-sm">{formatPrice(item.price)}</p>
-                  <p className="text-coral font-medium">{item.info}</p>
+                <div className="flex items-center">
+                  <input
+                    type="radio"
+                    id={`shipping-${method.id}`}
+                    name="shippingMethod"
+                    value={method.id}
+                    checked={formData.shippingMethod === method.id}
+                    onChange={handleInputChange}
+                    className="mr-3"
+                  />
+                  <label
+                    htmlFor={`shipping-${method.id}`}
+                    className="flex-grow cursor-pointer"
+                  >
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <span className="font-dm text-lg text-gray-800 block">
+                          {method.name}
+                        </span>
+                        <span className="text-sm text-gray-800">
+                          Estimated delivery: {method.days} business days
+                        </span>
+                        {method.minOrder && (
+                          <span className="text-sm text-coral block">
+                            {subtotal >= method.minOrder
+                              ? "Free shipping applied!"
+                              : `Free for orders over $${method.minOrder}`}
+                          </span>
+                        )}
+                      </div>
+                      <span className="font-medium text-gray-800">
+                        {method.price === 0
+                          ? "FREE"
+                          : `$${method.price.toFixed(2)}`}
+                      </span>
+                    </div>
+                  </label>
                 </div>
-              </label>
+              </div>
             ))}
           </div>
 
@@ -151,7 +148,12 @@ export const Shipping = ({
         </div>
 
         {/* Resumo do pedido */}
-        <OrderResume />
+        <OrderResume
+          tax={tax}
+          subtotal={subtotal}
+          total={total}
+          shipping={shipping}
+        />
       </div>
     </div>
   );
