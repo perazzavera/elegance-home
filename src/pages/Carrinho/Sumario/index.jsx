@@ -43,7 +43,7 @@ export default function Sumario() {
         </button>
         <Link
           to={cart.length === 0 ? "#" : "/checkout"}
-          className={` flex items-center bg-rose text-white justify-center py-3 px-6 rounded-lg hover:bg-coral transition-all duration-300 ${
+          className={`flex items-center justify-center text-center bg-rose text-white py-3 px-6 rounded-lg hover:bg-coral transition-all duration-300 ${
             cart.length === 0
               ? "cursor-not-allowed opacity-50 pointer-events-none"
               : ""
