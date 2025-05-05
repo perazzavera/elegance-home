@@ -10,7 +10,6 @@ import Breadcrumb from "../../components/Breadcrumbs";
 import Paginacao from "./Paginacao";
 
 const subcategorias = [
-  { name: "Cadeiras", to: "/produtos/moveis/cadeiras" },
   { name: "Mesas", to: "/produtos/moveis/mesas" },
   { name: "Sofás", to: "/produtos/moveis/sofas" },
   { name: "Poltronas", to: "/produtos/moveis/poltronas" },
@@ -18,7 +17,6 @@ const subcategorias = [
 ];
 
 const nomesFormatados = {
-  cadeiras: "Cadeiras",
   mesas: "Mesas",
   sofas: "Sofás",
   poltronas: "Poltronas",
