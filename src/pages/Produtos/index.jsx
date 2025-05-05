@@ -22,6 +22,7 @@ const nomesFormatados = {
   poltronas: "Poltronas",
   luminarias: "Luminárias",
   moveis: "Móveis",
+  iluminacao: "Iluminação",
 };
 
 export default function Produtos() {
