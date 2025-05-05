@@ -54,6 +54,10 @@ export const CartProvider = ({ children }) => {
     );
   };
 
+  const totalItens = () => {
+    return cart.reduce((total, item) => total + item.quantity, 0);
+  };
+
   // Atualiza quantidade de um item
   const updateQuantity = (id, color, newQuantity) => {
     if (newQuantity > 0) {
@@ -67,6 +71,36 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  const metodosEnvio = [
+    {
+      id: 1,
+      label: "Envio Padrão",
+      dias: "3-5 dias úteis",
+      valor: 15.9,
+    },
+    {
+      id: 2,
+      label: "Envio Expresso",
+      dias: "1-2 dias úteis",
+      valor: 25.9,
+    },
+  ];
+
+  const [formData, setFormData] = useState({
+    nome: "",
+    email: "",
+    telefone: "",
+    cep: "",
+    endereco: "",
+    cidade: "",
+    estado: "",
+    envio: "",
+  });
+
+  const formatPrice = (price) => {
+    return `R$${price.toFixed(2).replace(".", ",")}`;
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -76,6 +110,11 @@ export const CartProvider = ({ children }) => {
         updateQuantity,
         getCartTotal,
         clearCart,
+        totalItens,
+        metodosEnvio,
+        formData,
+        setFormData,
+        formatPrice,
       }}
     >
       {children}

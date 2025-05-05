@@ -6,9 +6,9 @@ export default function Color({
   handleChangeCor,
 }) {
   return (
-    <div>
-      <h3 className="font-dm text-xl text-gray-800">Color</h3>
-      <div className="flex gap-4 mb-4">
+    <div className=" rounded-xl mb-4 mx-auto">
+      <h3 className="font-dm text-xl text-gray-800">Cores disponíveis</h3>
+      <div className="flex gap-4">
         {produtoSelecionado.colors.map((item, index) => (
           <Radio
             value={item.name} // Passa o nome da cor como valor

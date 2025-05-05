@@ -9,6 +9,7 @@ import Item from "./Item";
 import BotaoSave from "./BotaoSave";
 import CartInfo from "./CartInfo";
 import { CartContext } from "../../context/CartContext";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function ProductDetails() {
   const { addToCart, updateQuantity } = useContext(CartContext);
@@ -17,9 +18,9 @@ export default function ProductDetails() {
   const [imagemSelecionada, setImagemSelecionada] = useState("");
   const [corSelecionada, setCorSelecionada] = useState("");
   const [produtoSelecionado, setProdutoSelecionado] = useState(null);
+  const notify = () => toast("Item adicionado ao carrinho!");
 
-  const params = useParams();
-  const { id, category } = params;
+  const { category, subcategory, id } = useParams();
 
   useEffect(() => {
     const produto = produtos.find(
@@ -51,14 +52,28 @@ export default function ProductDetails() {
     }
   };
 
+  const nomesFormatados = {
+    cadeiras: "Cadeiras",
+    mesas: "Mesas",
+    sofas: "Sofás",
+    poltronas: "Poltronas",
+    luminarias: "Luminárias",
+    moveis: "Móveis",
+  };
+
   const product = {
     breadcrumbs: [
       { id: 1, name: "Home", to: "/" },
-      { id: 2, name: `${category}`, to: `/products/${category}` },
+      { id: 2, name: "Produtos", to: "/produtos" },
       {
         id: 3,
-        name: `${produtoSelecionado.subcategory}`,
-        to: `/products/${category}/${produtoSelecionado.subcategory}`,
+        name: nomesFormatados[category.toLowerCase()],
+        to: `/produtos/${category}`,
+      },
+      {
+        id: 4,
+        name: nomesFormatados[produtoSelecionado.subcategory.toLowerCase()],
+        to: `/produtos/${category}/${produtoSelecionado.subcategory}`,
       },
     ],
     tag: `${produtoSelecionado.title}`,
@@ -68,8 +83,8 @@ export default function ProductDetails() {
     <>
       <section className="px-4 pb-10 bg-gray-100 lg:px-20">
         <Breadcrumb product={product} />
-        <div className="grid grid-cols-1 lg:grid-cols-2 lg:items-center lg:gap-20">
-          <div className="lg:pt-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-10">
+          <div className="">
             {/* PRODUTO */}
             <Item
               imagemSelecionada={imagemSelecionada}
@@ -77,8 +92,21 @@ export default function ProductDetails() {
               produtoSelecionado={produtoSelecionado}
             />
           </div>
-          <div>
-            <div className="mt-4">
+          <div className="grid grid-cols-1 gap-4">
+            <div>
+              <h3 className="font-dm text-2xl text-gray-800 mb-2 lg:text-3xl">
+                Detalhes do produto
+              </h3>
+              <div className="space-y-2">
+                {produtoSelecionado.productDetails.map((item, index) => (
+                  <span key={index} className="flex gap-2">
+                    <p className="font-black">•</p>
+                    <p className="lg:text-lg">{item}</p>
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div className="mt-4 grid grid-cols-1 lg:grid-cols-2 bg-white/30 lg:mt-0 shadow-black/20 shadow-md p-4 rounded-xl lg:items-center">
               <Color
                 handleChangeCor={handleChangeCor}
                 produtoSelecionado={produtoSelecionado}
@@ -91,15 +119,17 @@ export default function ProductDetails() {
               />
             </div>
             {/* BOTÕES */}
-            <div className="mt-4 space-y-4">
+            <div className="mt-2 space-y-2 grid grid-cols-1 ">
               <button
-                onClick={() =>
-                  addToCart(produtoSelecionado, contador, corSelecionada)
-                } // Adiciona o produto com a quantidade ao carrinho
-                className="bg-rose text-white py-3 px-6 text-lg font-medium rounded-lg w-full cursor-pointer"
+                onClick={() => {
+                  addToCart(produtoSelecionado, contador, corSelecionada);
+                  notify();
+                }} // Adiciona o produto com a quantidade ao carrinho
+                className="bg-rose text-white py-3 px-6 text-lg font-medium rounded-lg w-full cursor-pointer shadow-black/20 shadow-md lg:mb-0"
               >
-                Add to cart
+                Adicionar ao carrinho
               </button>
+              <ToastContainer position="bottom-right" />
               <BotaoSave
                 favoritos={favoritos}
                 toggleFavorito={toggleFavorito}
@@ -107,19 +137,6 @@ export default function ProductDetails() {
               />
             </div>
             <CartInfo />
-            <div>
-              <h3 className="font-dm text-2xl text-gray-800">
-                Product Details
-              </h3>
-              <div className="space-y-2">
-                {produtoSelecionado.productDetails.map((item, index) => (
-                  <span key={index} className="flex gap-2">
-                    <p className="font-black">•</p>
-                    <p>{item}</p>
-                  </span>
-                ))}
-              </div>
-            </div>
           </div>
         </div>
       </section>

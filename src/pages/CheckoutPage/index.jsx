@@ -1,101 +1,88 @@
-import React, { useContext, useState } from "react";
-import { Information } from "./Step1";
-import { Shipping } from "./Step2";
-import { CheckoutStep3 } from "./Step3";
+import { useContext, useEffect, useState } from "react";
+import Steps from "./Stepper";
+import Passo1 from "./Passo1";
+import Passo2 from "./Passo2";
+import Passo3 from "./Passo3";
 import { CartContext } from "../../context/CartContext";
 
-const Checkout = () => {
-  const [step, setStep] = useState(1); // Etapa do checkout
-  const [formData, setFormData] = useState({
-    email: "",
-    phone: "",
-    name: "",
-    lastName: "",
-    street: "",
-    complement: "",
-    city: "",
-    state: "",
-    zip: "",
-    country: "United States",
-    shippingMethod: "standart",
-    orderNotes: "",
-  });
+const steps = ["Envio", "Pagamento", "Confirmação"];
 
-  const shippingMethods = [
-    { id: "standard", name: "Standard Shipping", price: 15, days: "3-5" },
-    { id: "express", name: "Express Shipping", price: 25, days: "1-2" },
-    { id: "free", name: "Free Shipping", price: 0, days: "5-7", minOrder: 150 },
-  ];
+export default function Checkout() {
+  const { metodosEnvio, formData, setFormData, clearCart } =
+    useContext(CartContext);
+  const [currentStep, setCurrentStep] = useState(0);
+  const [cartao, setCartao] = useState("");
+  const [validade, setValidade] = useState("");
+  const [cvc, setCvc] = useState("");
 
-  const { getCartTotal } = useContext(CartContext);
-
-  const subtotal = getCartTotal();
-  const shipping =
-    formData.shippingMethod === "free" && subtotal >= 150
-      ? 0
-      : shippingMethods.find((m) => m.id === formData.shippingMethod)?.price ||
-        0;
-  const tax = subtotal * 0.07; // 7% tax
-  const total = subtotal + shipping + tax;
-
-  // Função para avançar para a próxima etapa
-  const nextStep = () => {
-    if (step < 3) {
-      setStep(step + 1);
-    }
+  const handleCartaoChange = (e) => {
+    const valorDigitado = e.target.value;
+    const somenteNumeros = valorDigitado.replace(/\D/g, "");
+    const formatado = somenteNumeros.replace(/(.{4})/g, "$1 ").trim();
+    setCartao(formatado);
   };
 
-  // Função para voltar para a etapa anterior
-  const prevStep = () => {
-    if (step > 1) {
-      setStep(step - 1);
+  const handleValidadeChange = (e) => {
+    const valor = e.target.value.replace(/\D/g, "").slice(0, 4);
+    let formatado = valor;
+    if (valor.length > 2) {
+      formatado = `${valor.slice(0, 2)}/${valor.slice(2)}`;
     }
+    setValidade(formatado);
   };
+
+  const handleCvcChange = (e) => {
+    const valor = e.target.value.replace(/\D/g, "").slice(0, 4);
+    setCvc(valor);
+  };
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [currentStep]);
 
   return (
-    <div className="checkout px-4 mt-4 lg:px-20">
-      <h2 className="text-3xl text-gray-800 font-dm">Checkout</h2>
-
-      {step === 1 && (
-        <Information
-          currentStep={step}
-          nextStep={nextStep}
-          formData={formData}
-          setFormData={setFormData}
-          total={total}
-          subtotal={subtotal}
-          tax={tax}
-          shipping={shipping}
-        />
-      )}
-
-      {step === 2 && (
-        <Shipping
-          prevStep={prevStep}
-          nextStep={nextStep}
-          currentStep={step}
-          formData={formData}
-          setFormData={setFormData}
-          total={total}
-          subtotal={subtotal}
-          tax={tax}
-          shipping={shipping}
-          shippingMethods={shippingMethods}
-        />
-      )}
-
-      {step === 3 && (
-        <CheckoutStep3
-          prevStep={prevStep}
-          currentStep={step}
-          total={total}
-          subtotal={subtotal}
-          tax={tax}
-          shipping={shipping}
-        />
-      )}
-    </div>
+    <section className="pt-16 px-4 lg:px-20 bg-bege">
+      <Steps steps={steps} currentStep={currentStep} />
+      <div>
+        <div>
+          {currentStep === 0 && (
+            <Passo1
+              formData={formData}
+              setFormData={setFormData}
+              metodosEnvio={metodosEnvio}
+              currentStep={currentStep}
+              setCurrentStep={setCurrentStep}
+            />
+          )}
+        </div>
+        <div>
+          {currentStep === 1 && (
+            <div>
+              <Passo2
+                cartao={cartao}
+                setCartao={setCartao}
+                handleCartaoChange={handleCartaoChange}
+                handleValidadeChange={handleValidadeChange}
+                handleCvcChange={handleCvcChange}
+                validade={validade}
+                cvc={cvc}
+                currentStep={currentStep}
+                setCurrentStep={setCurrentStep}
+                clearCart={clearCart}
+                formData={formData}
+                setFormData={setFormData}
+              />
+            </div>
+          )}
+        </div>
+        <div>
+          {currentStep === 2 && (
+            <div>
+              <Passo3 clearCart={clearCart} />
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
   );
-};
-
-export default Checkout;
+}

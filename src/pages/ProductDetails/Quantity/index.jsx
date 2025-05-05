@@ -6,9 +6,9 @@ export default function Quantity({
   contador,
 }) {
   return (
-    <div>
-      <h3 className="font-dm text-xl text-gray-800">Quantity</h3>
-      <div className="flex mt-2 items-center gap-4 bg-white w-fit p-3 rounded-lg border-1">
+    <div className="mx-auto">
+      <h3 className="font-dm text-xl text-gray-800 text-center">Quantidade</h3>
+      <div className="flex mt-2 items-center gap-4 bg-white w-fit p-3 rounded-lg border-1 lg:mt-6">
         <button onClick={handleDecrement} className="cursor-pointer">
           <LuMinus className="h-6 w-6" />
         </button>

@@ -9,19 +9,19 @@ import {
 import { Link } from "react-router-dom";
 
 const categories = [
-  { name: "Living Room", to: "/living-room" },
-  { name: "Bedroom", to: "/bedroom" },
-  { name: "Dining", to: "/dining" },
-  { name: "Decor", to: "/decor" },
-  { name: "Collections", to: "/collections" },
+  { name: "Sala de Estar", to: "/living-room" },
+  { name: "Quarto", to: "/bedroom" },
+  { name: "Sala de Jantar", to: "/dining" },
+  { name: "Decoração", to: "/decor" },
+  { name: "Coleções", to: "/collections" },
 ];
 
 const customerServices = [
-  { name: "Contact Us", to: "/contact-us" },
+  { name: "Fale Conosco", to: "/contact-us" },
   { name: "FAQ", to: "/faq" },
-  { name: "Shipping & Returns", to: "/shipping-returns" },
-  { name: "Terms & Conditions", to: "/terms-conditions" },
-  { name: "Privacy Policy", to: "/privacy" },
+  { name: "Envios & Devoluções", to: "/shipping-returns" },
+  { name: "Termos & Condições", to: "/terms-conditions" },
+  { name: "Política de Privacidade", to: "/privacy" },
 ];
 
 export default function Rodape() {
@@ -34,9 +34,9 @@ export default function Rodape() {
             <p className="text-rose text-sm ">HOME</p>
           </div>
           <p className="my-3">
-            Elegance Home offers premium furniture and interior design solutions
-            for the discerning customer. We blend luxury with comfort to
-            transform your living spaces.
+            Elegance Home oferece móveis e soluções de design de interiores
+            premium para clientes exigentes. Combinamos luxo com conforto para
+            transformar seus espaços de vida.
           </p>
           <nav className="flex gap-4">
             <a href="http://facebook.com">
@@ -52,13 +52,13 @@ export default function Rodape() {
         </div>
         <div className="flex flex-col lg:items-center lg:w-fit lg:mx-auto">
           <h2 className="font-lato text-xl font-medium border-b-2 border-rose w-fit pb-2 mb-2">
-            Shop Categories
+            Categorias da Loja
           </h2>
           <div className="flex flex-col gap-2 lg:-ms-10">
             {categories.map((category) => (
               <Link
                 className="hover:text-rose transition-all duration-150"
-                key={category.id}
+                key={category.name}
                 to={category.to}
               >
                 {category.name}
@@ -68,13 +68,13 @@ export default function Rodape() {
         </div>
         <div className="flex flex-col lg:items-center lg:w-fit lg:mx-auto">
           <h2 className="font-lato text-xl font-medium border-b-2 border-rose w-fit pb-2 mb-2">
-            Customer Service
+            Atendimento ao Cliente
           </h2>
           <div className="flex flex-col gap-2">
             {customerServices.map((service) => (
               <Link
                 className="hover:text-rose transition-all duration-150"
-                key={service.id}
+                key={service.name}
                 to={service.to}
               >
                 {service.name}
@@ -84,31 +84,10 @@ export default function Rodape() {
         </div>
         <div className="flex flex-col">
           <h2 className="font-lato text-xl font-medium border-b-2 border-rose w-fit pb-2 mb-2">
-            Stay Updated
+            Entre em contato
           </h2>
-          <p className="mb-4">
-            Subscribe to our newsletter for exclusive offers and interior design
-            tips.
-          </p>
+
           <div>
-            <label for="hs-trailing-button-add-on" class="sr-only">
-              Label
-            </label>
-            <div class="flex rounded-lg">
-              <input
-                type="text"
-                id="hs-trailing-button-add-on"
-                placeholder="Your email adress"
-                name="hs-trailing-button-add-on"
-                className="py-3 px-4 w-full border-1 border-rose rounded-s-lg sm:text-sm focus:z-10 focus:border-coral focus:ring-coral disabled:opacity-50 disabled:pointer-events-none focus:outline-0"
-              />
-              <button
-                type="button"
-                className="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-e-md border border-transparent bg-rose text-white hover:bg-coral focus:outline-hidden focus:bg-coral disabled:opacity-50 disabled:pointer-events-none"
-              >
-                Subscribe
-              </button>
-            </div>
             <div className="space-y-4 my-6">
               <div className="flex items-center gap-3">
                 <LuPhone className="w-7 h-7 text-rose hover:text-white transition-all duration-150" />
@@ -116,7 +95,7 @@ export default function Rodape() {
                   className="font-montserrat text-lg"
                   href="tel:+1 (800) 123-4567"
                 >
-                  +1 (800) 123-4567
+                  (47) 99876-5432
                 </a>
               </div>
               <div className="flex items-center gap-3">
@@ -125,13 +104,13 @@ export default function Rodape() {
                   className="font-montserrat text-lg"
                   href="mailto:contact@elegancehome.com"
                 >
-                  contact@elegancehome.com
+                  contato@elegancehome.com
                 </a>
               </div>
               <div className="flex items-center gap-3">
                 <LuMapPin className="w-7 h-7 text-rose hover:text-white transition-all duration-150" />
                 <p className="font-montserrat text-lg">
-                  123 Luxury Lane, Design District{" "}
+                  Brusque, Santa Catarina
                 </p>
               </div>
             </div>
@@ -140,8 +119,8 @@ export default function Rodape() {
       </div>
       <div className="mt-6 mb-6 border-t-1 border-rose pt-6">
         <p className="text-center">
-          © 2025 Elegance Home. All rights reserved. Fictitious project,
-          non-commercial *
+          © 2025 Elegance Home. Todos os direitos reservados. Projeto fictício,
+          não comercial *
         </p>
       </div>
     </footer>

@@ -1,124 +1,85 @@
-import { useEffect } from "react";
+import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
+import Fade from "embla-carousel-fade";
 import { Link } from "react-router-dom";
+import { useCallback } from "react";
+import { DotButton, useDotButton } from "./Paginacao";
 
 const slides = [
   {
     id: 1,
     src: "/images/bedroom.jpg",
-    titulo: "Rest in Refined Serenity",
-    texto: "Discover timeless comfort in bespoke bedroom designs",
+    titulo: "Descanse com Serenidade Refinada",
+    texto: "Descubra o conforto atemporal em designs de quartos sob medida",
   },
   {
     id: 2,
     src: "/images/living.jpg",
-    titulo: "Where Elegance Meets Everyday Living",
-    texto: "Transform your home with curated luxury and warmth",
+    titulo: "Onde a Elegância Encontra o Cotidiano",
+    texto:
+      "Transforme sua casa com luxo e aconchego cuidadosamente selecionados",
   },
   {
     id: 3,
     src: "/images/kitchen.jpg",
-    titulo: "Dine with Distinction",
-    texto: "Style and sophistication for unforgettable moments",
+    titulo: "Jante com Sofisticação",
+    texto: "Estilo e sofisticação para momentos inesquecíveis",
   },
 ];
 
 export default function HeroSection() {
-  useEffect(() => {
-    // Inicializa manualmente os componentes da Preline
-    window.HSStaticMethods.autoInit();
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
+    Autoplay({ delay: 7000 }),
+    Fade(),
+  ]);
+
+  const onNavButtonClick = useCallback((emblaApi) => {
+    const autoPlay = emblaApi?.plugins()?.autoPlay;
+    if (!autoPlay) return;
   }, []);
+
+  const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(
+    emblaApi,
+    onNavButtonClick
+  );
 
   return (
     <section>
-      {/* Slider */}
-      <div
-        data-hs-carousel='{
-        "isAutoPlay": true,
-        "loadingClasses": "opacity-0",
-        "dotsItemClasses": "bg-white/70 border-0 hs-carousel-active:bg-rose hs-carousel-active:w-[20px] size-3 rounded-full cursor-pointer transition-all duration-300"
-      }'
-        className="relative"
-      >
-        <div className="hs-carousel relative overflow-hidden w-full min-h-120 bg-white lg:min-h-150">
-          <div className="hs-carousel-body absolute top-0 bottom-0 start-0 flex flex-nowrap transition-transform  duration-700 opacity-0">
-            {slides.map((slide) => (
-              <div className="hs-carousel-slide">
-                <div className="flex justify-center h-full bg-gray-100 dark:bg-neutral-900">
-                  <div
-                    className="h-full text-4xl text-gray-800 transition duration-700 dark:text-white w-full bg-center bg-cover bg-no-repeat"
-                    style={{ backgroundImage: `url(${slide.src})` }}
-                  >
-                    <div className="flex w-full h-full items-center">
-                      <div className="text-white p-9 bg-gradient-to-r from-black/80 to-transparent h-full flex flex-col justify-center">
-                        <h2 className="font-dm text-3xl text-shadow-black text-shadow-sm lg:text-6xl">
-                          {slide.titulo}
-                        </h2>
-                        <p className="  font-montserrat text-lg lg:text-2xl lg:mb-4">
-                          {slide.texto}
-                        </p>
-                        <Link
-                          to="explore"
-                          className="text-xs font-montserrat bg-rose py-2 px-4 rounded-lg w-fit hover:bg-coral transition-all duration-300 lg:text-lg lg:py-3 lg:px-6"
-                        >
-                          Explore Now
-                        </Link>
-                      </div>
-                    </div>
+      <div className="embla z-0 relative" ref={emblaRef}>
+        <div className="embla__container flex w-full overflow-hidden z-0">
+          {slides.map((slide) => (
+            <div className="embla__slide w-full shrink-0 h-[500px] lg:h-[600px] z-0">
+              <div
+                className="h-full bg-center bg-cover z-0"
+                style={{ backgroundImage: `url(${slide.src})` }}
+              >
+                <div className="h-full bg-linear-to-r from-black/80 to-black/0 flex items-center px-4 lg:px-20 text-white">
+                  <div className="grid grid-cols-1 gap-2">
+                    <h3 className="font-dm text-4xl">{slide.titulo}</h3>
+                    <p className="text-xl">{slide.texto}</p>
+                    <Link className="bg-rose w-fit py-2 px-6 rounded-xl hover:bg-coral transition-all duration-300">
+                      Veja mais
+                    </Link>
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
-
-        <button
-          type="button"
-          className="hs-carousel-prev hs-carousel-disabled:opacity-50 hs-carousel-disabled:cursor-default absolute top-1/2 start-2 inline-flex justify-center items-center size-6 bg-transparent border border-gray-100 text-white rounded-full shadow-2xs hover:bg-rose transition-all duration-300 -translate-y-1/2 focus:outline-hidden"
-        >
-          <span className="text-2xl" aria-hidden="true">
-            <svg
-              className="shrink-0 size-5"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="m15 18-6-6 6-6"></path>
-            </svg>
-          </span>
-          <span className="sr-only">Previous</span>
-        </button>
-        <button
-          type="button"
-          className="hs-carousel-next hs-carousel-disabled:opacity-50 hs-carousel-disabled:cursor-default absolute top-1/2 end-2 inline-flex justify-center items-center size-6 bg-transparent border border-gray-100 text-white rounded-full shadow-2xs hover:bg-rose transition-all duration-300 -translate-y-1/2 focus:outline-hidden"
-        >
-          <span className="sr-only">Next</span>
-          <span className="text-2xl" aria-hidden="true">
-            <svg
-              className="shrink-0 size-5"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="m9 18 6-6-6-6"></path>
-            </svg>
-          </span>
-        </button>
-
-        <div class="hs-carousel-pagination justify-center absolute bottom-3 start-0 end-0 flex gap-x-2"></div>
       </div>
-      {/* End Slider */}
+      <div className="embla__controls absolute -mt-8 w-full">
+        <div className="embla__dots w-full flex justify-center gap-4">
+          {scrollSnaps.map((_, index) => (
+            <DotButton
+              key={index}
+              onClick={() => onDotButtonClick(index)}
+              className={` w-3 h-3 rounded-full transition-all duration-300 ${
+                index === selectedIndex ? "bg-coral w-5" : "bg-white"
+              }`}
+            />
+          ))}
+        </div>
+      </div>
     </section>
   );
 }

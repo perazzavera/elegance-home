@@ -12,12 +12,12 @@ export default function SearchBar({ onClose }) {
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full z-50 relative">
       <form onSubmit={handleSearch} className="flex items-center">
         <div className="relative flex-grow">
           <input
             type="text"
-            placeholder="Search for products..."
+            placeholder="Busque por produtos..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full py-2 pl-10 pr-4 border-b-2 border-secondary bg-transparent focus:outline-none text-neutral-white"
@@ -32,7 +32,7 @@ export default function SearchBar({ onClose }) {
           type="submit"
           className="ml-2 rounded-xl px-4 py-2 font-montserrat hover:bg-rose hover:text-white transition-all duration-300"
         >
-          Search
+          Buscar
         </button>
         <button
           type="button"

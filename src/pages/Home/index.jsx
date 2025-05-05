@@ -1,21 +1,21 @@
-import Category from "./Category";
-import DesignServices from "./DesignServices";
-import FeaturedProducts from "./FeaturedProducts";
+import Categorias from "./Categorias";
+import Depoimentos from "./Depoimentos";
+import Destaques from "./Destaques";
 import HeroSection from "./HeroSection";
-import NewCollection from "./NewCollection";
-import Subscription from "./Subscription";
-import Testimonials from "./Testimonials";
+import Newsletter from "./Newsletter";
+import NovaColecao from "./NovaColecao";
+import ServicosDesign from "./ServicosDesign";
 
 export default function Home() {
   return (
     <>
       <HeroSection />
-      <NewCollection />
-      <Category />
-      <FeaturedProducts />
-      <DesignServices />
-      <Testimonials />
-      <Subscription />
+      <NovaColecao />
+      <Categorias />
+      <Destaques />
+      <ServicosDesign />
+      <Depoimentos />
+      <Newsletter />
     </>
   );
 }

@@ -15,20 +15,18 @@ import { Link, useLocation } from "react-router-dom";
 import { CartContext } from "../../context/CartContext";
 
 const navigation = [
-  { name: "Home", to: "/" },
-  { name: "Living Room", to: "/living-room" },
-  { name: "Bedroom", to: "/bedroom" },
-  { name: "Dining", to: "/dining" },
-  { name: "Decor", to: "/decor" },
-  { name: "Collections", to: "/collections" },
+  { name: "Início", to: "/" },
+  { name: "Produtos", to: "/produtos" },
+  { name: "Sobre Nós", to: "/sobre" },
+  { name: "Contato", to: "/contato" },
 ];
 
 export default function NavBar() {
-  const { cart } = useContext(CartContext);
+  const { totalItens } = useContext(CartContext);
   const location = useLocation();
   const [searchOpen, setSearchOpen] = useState(false);
 
-  const cartItemCount = cart.reduce((total, item) => total + item.quantity, 0);
+  const totalItensCarrinho = totalItens();
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -36,11 +34,6 @@ export default function NavBar() {
         {/* LOGO MARCA */}
         <div className="h-full flex items-center">
           <Link to="/" className="flex items-center gap-3">
-            <img
-              className="hidden lg:block h-15"
-              src="/images/favicon.png"
-              alt=""
-            />
             <div className="flex items-baseline">
               <h1 className="text-3xl text-rose lg:text-4xl">ELEGANCE</h1>
               <p className="text-rose text-sm ">HOME</p>
@@ -96,7 +89,7 @@ export default function NavBar() {
                     href="#"
                     className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
                   >
-                    Your Profile
+                    Meu Perfil
                   </a>
                 </MenuItem>
                 <MenuItem>
@@ -104,7 +97,7 @@ export default function NavBar() {
                     href="#"
                     className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
                   >
-                    Settings
+                    Configurações
                   </a>
                 </MenuItem>
                 <MenuItem>
@@ -112,17 +105,17 @@ export default function NavBar() {
                     href="#"
                     className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
                   >
-                    Sign out
+                    Sair
                   </a>
                 </MenuItem>
               </MenuItems>
             </Menu>
             <div className="relative">
-              <Link to="/cart ">
+              <Link to="/carrinho ">
                 <LuShoppingBag className="w-7 h-7 text-rose ps-2" />
-                {cartItemCount > 0 && (
+                {totalItensCarrinho > 0 && (
                   <span className="absolute -top-2 -right-2 bg-rose text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
-                    {cartItemCount}
+                    {totalItensCarrinho}
                   </span>
                 )}
               </Link>
@@ -146,7 +139,7 @@ export default function NavBar() {
 
           {/* SEARCH OVERLAY */}
           {searchOpen && (
-            <div className="absolute top-15 left-0 right-0 bg-gray-800 shadow-md p-4 text-rose animate-fade-up lg:px-20">
+            <div className="absolute z-50 top-15 left-0 right-0 bg-gray-800 shadow-md p-4 text-rose animate-fade-up lg:px-20">
               <SearchBar onClose={() => setSearchOpen(false)} />
             </div>
           )}
